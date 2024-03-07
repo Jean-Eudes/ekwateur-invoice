@@ -18,6 +18,7 @@ repositories {
 dependencies {
     // Use JUnit Jupiter for testing.
     testImplementation(libs.junit.jupiter)
+    testImplementation("org.assertj:assertj-core:3.25.3")
 
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
@@ -32,12 +33,18 @@ java {
     }
 }
 
+tasks.withType<JavaCompile>().configureEach {
+    options.compilerArgs.add("--enable-preview")
+}
+
+
 application {
     // Define the main class for the application.
-    mainClass = "org.example.App"
+    mainClass = "io.ekwateur.invoice.App"
 }
 
 tasks.named<Test>("test") {
     // Use JUnit Platform for unit tests.
     useJUnitPlatform()
+    jvmArgs("--enable-preview")
 }
