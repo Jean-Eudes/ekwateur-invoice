@@ -1,5 +1,8 @@
-package io.ekwateur.invoice.domain;
+package io.ekwateur.invoice.domain.invoice;
 
+import io.ekwateur.invoice.domain.customer.BusinessCustomer;
+import io.ekwateur.invoice.domain.customer.Customer;
+import io.ekwateur.invoice.domain.customer.PrivateCustomer;
 import java.math.BigDecimal;
 
 public record Invoice(Customer customer) {

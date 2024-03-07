@@ -1,4 +1,4 @@
-package io.ekwateur.invoice.domain;
+package io.ekwateur.invoice.domain.customer;
 
 public record BusinessCustomer(CustomerReference reference, String siret, String businessName, long turnover) implements Customer {
 

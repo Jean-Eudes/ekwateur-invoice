@@ -1,7 +1,11 @@
-package io.ekwateur.invoice.domain;
+package io.ekwateur.invoice.domain.invoice;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import io.ekwateur.invoice.domain.customer.BusinessCustomer;
+import io.ekwateur.invoice.domain.customer.CustomerReference;
+import io.ekwateur.invoice.domain.customer.PrivateCustomer;
+import io.ekwateur.invoice.domain.customer.Title;
 import java.math.BigDecimal;
 import org.junit.jupiter.api.Test;
 

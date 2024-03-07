@@ -1,4 +1,4 @@
-package io.ekwateur.invoice.domain;
+package io.ekwateur.invoice.domain.customer;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;

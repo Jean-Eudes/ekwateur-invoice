@@ -1,4 +1,4 @@
-package io.ekwateur.invoice.domain;
+package io.ekwateur.invoice.domain.customer;
 
 import static java.lang.StringTemplate.STR;
 
