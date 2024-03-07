@@ -3,35 +3,31 @@ package io.ekwateur.invoice.domain.invoice;
 import io.ekwateur.invoice.domain.customer.BusinessCustomer;
 import io.ekwateur.invoice.domain.customer.Customer;
 import io.ekwateur.invoice.domain.customer.PrivateCustomer;
+import io.ekwateur.invoice.domain.referential.Energy;
+import io.ekwateur.invoice.domain.referential.PriceReferential;
 import java.math.BigDecimal;
+import java.util.function.Function;
 
-public record Invoice(Customer customer) {
-
-  private static final BigDecimal ELECTRICITY_AMOUNT_PER_MONTH_FOR_PRIVATE = new BigDecimal("0.121");
-  private static final BigDecimal GAS_AMOUNT_PER_MONTH_FOR_PRIVATE = new BigDecimal("0.115");
-  private static final BigDecimal GAS_AMOUNT_PER_MONTH_SMALL_COMPANY = new BigDecimal("0.113");
-  private static final BigDecimal ELECTRICITY_AMOUNT_PER_MONTH_SMALL_COMPANY = new BigDecimal("0.118");
-  private static final BigDecimal GAS_AMOUNT_PER_MONTH_BIG_COMPANY = new BigDecimal("0.114");
-  private static final BigDecimal ELECTRICITY_AMOUNT_PER_MONTH_BIG_COMPANY = new BigDecimal("0.111");
+public record Invoice(Customer customer, PriceReferential priceReferential) {
 
   public BigDecimal amount(BigDecimal electricConsumption, BigDecimal gasConsumption) {
     switch (customer) {
       case PrivateCustomer _ -> {
-        BigDecimal electricityAmount = ELECTRICITY_AMOUNT_PER_MONTH_FOR_PRIVATE.multiply(electricConsumption);
-        BigDecimal gazAmount = GAS_AMOUNT_PER_MONTH_FOR_PRIVATE.multiply(gasConsumption);
-        return electricityAmount.add(gazAmount);
+        return computePrice(priceReferential::priceForPrivateCustomer, electricConsumption, gasConsumption);
       }
       case BusinessCustomer smallBusinessCustomer when !smallBusinessCustomer.isBigCompany() -> {
-        BigDecimal electricityAmount = ELECTRICITY_AMOUNT_PER_MONTH_SMALL_COMPANY.multiply(electricConsumption);
-        BigDecimal gazAmount = GAS_AMOUNT_PER_MONTH_SMALL_COMPANY.multiply(gasConsumption);
-        return electricityAmount.add(gazAmount);
+        return computePrice(priceReferential::priceForSmallCompany, electricConsumption, gasConsumption);
       }
       case BusinessCustomer _ -> {
-        BigDecimal electricityAmount = ELECTRICITY_AMOUNT_PER_MONTH_BIG_COMPANY.multiply(electricConsumption);
-        BigDecimal gazAmount = GAS_AMOUNT_PER_MONTH_BIG_COMPANY.multiply(gasConsumption);
-        return electricityAmount.add(gazAmount);
+        return computePrice(priceReferential::priceForBigCompany, electricConsumption, gasConsumption);
       }
     }
+  }
+
+  private BigDecimal computePrice(Function<Energy, BigDecimal> pricePerEnergy, BigDecimal electricConsumption, BigDecimal gasConsumption) {
+    BigDecimal electricityAmount = pricePerEnergy.apply(Energy.ELECTRICITY).multiply(electricConsumption);
+    BigDecimal gazAmount = pricePerEnergy.apply(Energy.GAS).multiply(gasConsumption);
+    return electricityAmount.add(gazAmount);
   }
 
 }

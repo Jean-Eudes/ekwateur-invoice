@@ -6,6 +6,7 @@ import io.ekwateur.invoice.domain.customer.BusinessCustomer;
 import io.ekwateur.invoice.domain.customer.CustomerReference;
 import io.ekwateur.invoice.domain.customer.PrivateCustomer;
 import io.ekwateur.invoice.domain.customer.Title;
+import io.ekwateur.invoice.domain.referential.PriceReferential;
 import java.math.BigDecimal;
 import org.junit.jupiter.api.Test;
 
@@ -15,8 +16,8 @@ class InvoiceTest {
   void should_compute_invoice_amount_for_a_private_client_that_only_consume_electric() {
     // Given
     CustomerReference reference = new CustomerReference("EKW12345678");
-    PrivateCustomer customer = new PrivateCustomer(reference, "jean", "durand", Title.Mr);
-    Invoice invoice = new Invoice(customer);
+    PrivateCustomer customer = new PrivateCustomer(reference, "jean", "durand", Title.MR);
+    Invoice invoice = new Invoice(customer, new PriceReferential());
 
     // When
     BigDecimal amount = invoice.amount(new BigDecimal("12.5"), BigDecimal.ZERO);
@@ -29,8 +30,8 @@ class InvoiceTest {
   void should_compute_invoice_amount_for_a_private_client_that_only_consume_gaz() {
     // Given
     CustomerReference reference = new CustomerReference("EKW12345678");
-    PrivateCustomer customer = new PrivateCustomer(reference, "jean", "durand", Title.Mr);
-    Invoice invoice = new Invoice(customer);
+    PrivateCustomer customer = new PrivateCustomer(reference, "jean", "durand", Title.MR);
+    Invoice invoice = new Invoice(customer, new PriceReferential());
 
     // When
     BigDecimal amount = invoice.amount(BigDecimal.ZERO, new BigDecimal("15"));
@@ -43,8 +44,8 @@ class InvoiceTest {
   void should_compute_invoice_amount_for_a_private_client_that_consume_gaz_and_electric() {
     // Given
     CustomerReference reference = new CustomerReference("EKW12345678");
-    PrivateCustomer customer = new PrivateCustomer(reference, "jean", "durand", Title.Mr);
-    Invoice invoice = new Invoice(customer);
+    PrivateCustomer customer = new PrivateCustomer(reference, "jean", "durand", Title.MR);
+    Invoice invoice = new Invoice(customer, new PriceReferential());
 
     // When
     BigDecimal amount = invoice.amount(new BigDecimal("12.5"), new BigDecimal("15"));
@@ -58,7 +59,7 @@ class InvoiceTest {
     // Given
     CustomerReference reference = new CustomerReference("EKW12345678");
     BusinessCustomer customer = new BusinessCustomer(reference, "802954785", "arcus", 10_000);
-    Invoice invoice = new Invoice(customer);
+    Invoice invoice = new Invoice(customer, new PriceReferential());
 
     // When
     BigDecimal amount = invoice.amount(BigDecimal.ZERO, new BigDecimal("10"));
@@ -72,7 +73,7 @@ class InvoiceTest {
     // Given
     CustomerReference reference = new CustomerReference("EKW12345678");
     BusinessCustomer customer = new BusinessCustomer(reference, "802954785", "arcus", 10_000);
-    Invoice invoice = new Invoice(customer);
+    Invoice invoice = new Invoice(customer, new PriceReferential());
 
     // When
     BigDecimal amount = invoice.amount(new BigDecimal("16"), BigDecimal.ZERO);
@@ -86,7 +87,7 @@ class InvoiceTest {
     // Given
     CustomerReference reference = new CustomerReference("EKW12345678");
     BusinessCustomer customer = new BusinessCustomer(reference, "802954785", "arcus", 10_000);
-    Invoice invoice = new Invoice(customer);
+    Invoice invoice = new Invoice(customer, new PriceReferential());
 
     // When
     BigDecimal amount = invoice.amount(new BigDecimal("12.5"), new BigDecimal("15"));
@@ -100,7 +101,7 @@ class InvoiceTest {
     // Given
     CustomerReference reference = new CustomerReference("EKW12345678");
     BusinessCustomer customer = new BusinessCustomer(reference, "802954785", "arcus", 2_000_000);
-    Invoice invoice = new Invoice(customer);
+    Invoice invoice = new Invoice(customer, new PriceReferential());
 
     // When
     BigDecimal amount = invoice.amount(BigDecimal.ZERO, new BigDecimal("15"));
@@ -114,7 +115,7 @@ class InvoiceTest {
     // Given
     CustomerReference reference = new CustomerReference("EKW12345678");
     BusinessCustomer customer = new BusinessCustomer(reference, "802954785", "arcus", 2_000_000);
-    Invoice invoice = new Invoice(customer);
+    Invoice invoice = new Invoice(customer, new PriceReferential());
 
     // When
     BigDecimal amount = invoice.amount(new BigDecimal("10"), BigDecimal.ZERO);
@@ -128,7 +129,7 @@ class InvoiceTest {
     // Given
     CustomerReference reference = new CustomerReference("EKW12345678");
     BusinessCustomer customer = new BusinessCustomer(reference, "802954785", "arcus", 2_000_000);
-    Invoice invoice = new Invoice(customer);
+    Invoice invoice = new Invoice(customer, new PriceReferential());
 
     // When
     BigDecimal amount = invoice.amount(new BigDecimal("12.5"), new BigDecimal("15"));
