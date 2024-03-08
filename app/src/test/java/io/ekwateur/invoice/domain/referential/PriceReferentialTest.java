@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
 
 class PriceReferentialTest {
 
-
   @Test
   void should_find_price_by_energy() {
     // Given

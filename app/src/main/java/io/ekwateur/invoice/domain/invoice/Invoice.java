@@ -15,18 +15,18 @@ public record Invoice(Customer customer, PriceReferential priceReferential) {
       case PrivateCustomer _ -> {
         return computePrice(priceReferential::priceForPrivateCustomer, electricConsumption, gasConsumption);
       }
-      case BusinessCustomer smallBusinessCustomer when !smallBusinessCustomer.isBigCompany() -> {
-        return computePrice(priceReferential::priceForSmallCompany, electricConsumption, gasConsumption);
+      case BusinessCustomer smallBusinessCustomer when smallBusinessCustomer.isBigCompany() -> {
+        return computePrice(priceReferential::priceForBigCompany, electricConsumption, gasConsumption);
       }
       case BusinessCustomer _ -> {
-        return computePrice(priceReferential::priceForBigCompany, electricConsumption, gasConsumption);
+        return computePrice(priceReferential::priceForSmallCompany, electricConsumption, gasConsumption);
       }
     }
   }
 
   private BigDecimal computePrice(Function<Energy, BigDecimal> pricePerEnergy, BigDecimal electricConsumption, BigDecimal gasConsumption) {
-    BigDecimal electricityAmount = pricePerEnergy.apply(Energy.ELECTRICITY).multiply(electricConsumption);
-    BigDecimal gazAmount = pricePerEnergy.apply(Energy.GAS).multiply(gasConsumption);
+    var electricityAmount = pricePerEnergy.apply(Energy.ELECTRICITY).multiply(electricConsumption);
+    var gazAmount = pricePerEnergy.apply(Energy.GAS).multiply(gasConsumption);
     return electricityAmount.add(gazAmount);
   }
 

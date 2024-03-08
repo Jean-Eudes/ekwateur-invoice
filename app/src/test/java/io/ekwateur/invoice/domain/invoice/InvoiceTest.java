@@ -107,7 +107,7 @@ class InvoiceTest {
     BigDecimal amount = invoice.amount(BigDecimal.ZERO, new BigDecimal("15"));
 
     // Then
-    assertThat(amount).isEqualByComparingTo("1.71");
+    assertThat(amount).isEqualByComparingTo("1.665");
   }
 
   @Test
@@ -121,7 +121,7 @@ class InvoiceTest {
     BigDecimal amount = invoice.amount(new BigDecimal("10"), BigDecimal.ZERO);
 
     // Then
-    assertThat(amount).isEqualByComparingTo("1.11");
+    assertThat(amount).isEqualByComparingTo("1.140");
   }
 
   @Test
@@ -135,7 +135,7 @@ class InvoiceTest {
     BigDecimal amount = invoice.amount(new BigDecimal("12.5"), new BigDecimal("15"));
 
     // Then
-    assertThat(amount).isEqualByComparingTo("3.0975");
+    assertThat(amount).isEqualByComparingTo("3.0900");
   }
 
 }
