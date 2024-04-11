@@ -1,4 +1,4 @@
-# Kata autour d'un sujet sur la facturetion
+# Kata autour d'un sujet sur la facturation
 
 ## Enoncé de l'exercice
 Le product owner te demande de developper un programme qui permet de calculer le montant à facturer à un client d'Ekwateur pour
